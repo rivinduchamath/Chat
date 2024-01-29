@@ -1,0 +1,80 @@
+
+chatapp:
+  relay:
+    host: 127.0.0.1
+    port: 61613
+spordee:
+  app:
+    jwtExpirationMs: 86400000
+    jwtSecret: rivindusSecretKey
+    firebaseNotificationTopic: chatappFireBase
+    firebaseServerKey: AAAA3jTMbME:APA91bGxJiku08PgoMi1HhmV7ZXt1LRafp7lHPj-a8ixHBnh1FUqEj3M7wNVPtPtR6OTp4uLDDt2zZjqOyG6DsPVPfVu4MPZ1kL6H6x0Uc0Kels7kRL9fJConTLMD-HbBrh7EbW3cnQL
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    enabled: false
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    metadataMap:
+      instanceId: ${spring.application.name}:${random.value}
+    preferIpAddress: true
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          actuate:
+            trace:
+              WebRequestTraceFilter: TRACE
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  security:
+    enabled: false
+security:
+  headers:
+    cache: false
+  basic:
+    enabled: false
+server:
+  port: 8080
+spring:
+  application:
+    name: message
+  datasource:
+    url: jdbc:mysql://localhost:3306/jwt_security22?createDatabaseIfNotExist=true
+    username: root
+    password: abcd@ABCD1
+    #    initialization-mode: always
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  data:
+    redis:
+      repositories:
+        enabled: true
+      host: localhost
+      port: 6379
+  session:
+    store-type: redis
+  messages:
+    cache-seconds: 0
+  cassandra:
+    contact-points: localhost
+    keyspace-name: my_keyspace
+    username: guest
+    local-datacenter: datacenter1
+    password: guest
+    port: 9042
+
+security.headers.cache: false
+server.session.timeout: 600
