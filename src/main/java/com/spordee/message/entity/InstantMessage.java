@@ -3,21 +3,30 @@ package com.spordee.message.entity;
 import com.google.common.base.Strings;
 
 import com.spordee.message.utils.SystemUsers;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+@Getter
+@Setter
 @Table("messages")
 public class InstantMessage {
 
 	@PrimaryKey
 	private InstantMessageKey instantMessageKey;
+	@Column("from_user")
 
 	private String fromUser;
+	@Column("to_user")
+
 	private String toUser;
 	private String text;
+	@Column("is_notification")
 	private boolean isNotification;
 
 	public InstantMessage() {

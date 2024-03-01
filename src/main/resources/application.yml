@@ -70,7 +70,7 @@ spring:
     cache-seconds: 0
   cassandra:
     contact-points: localhost
-    keyspace-name: my_keyspace
+    keyspace-name: cycling
     username: guest
     local-datacenter: datacenter1
     password: guest
