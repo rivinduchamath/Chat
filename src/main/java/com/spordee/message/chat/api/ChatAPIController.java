@@ -38,7 +38,6 @@ public class ChatAPIController {
   private InstantMessageService instantMessageService;
 
   @PostMapping(value = "/{chatRoomId}")
-  @ResponseBody
   public void postNewMessage(@PathVariable  String chatRoomId,
        @RequestBody @Validated MessagePosting messagePosting) throws JsonProcessingException {
     InstantMessage instantMessage = new InstantMessage();
