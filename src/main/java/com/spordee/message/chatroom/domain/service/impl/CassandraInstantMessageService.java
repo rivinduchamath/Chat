@@ -1,6 +1,7 @@
 package com.spordee.message.chatroom.domain.service.impl;
 
 import com.spordee.message.chatroom.domain.model.ChatRoom;
+import com.spordee.message.chatroom.domain.model.ChatRoomUser;
 import com.spordee.message.chatroom.domain.repository.InstantMessageRepository;
 import com.spordee.message.chatroom.domain.service.ChatRoomService;
 import com.spordee.message.chatroom.domain.service.InstantMessageService;
@@ -27,13 +28,14 @@ public class CassandraInstantMessageService implements InstantMessageService {
 		if (instantMessage.isFromAdmin() || instantMessage.isPublic()) {
 			ChatRoom chatRoom = chatRoomService.findById(instantMessage.getInstantMessageKey().getChatRoomId());
 
-			chatRoom.getConnectedUsers().forEach(connectedUser -> {
-				InstantMessageKey instantMessageKey = instantMessage.getInstantMessageKey();
-				instantMessageKey.setUsername(connectedUser.getUsername());
-				instantMessage.setInstantMessageKey(instantMessageKey);
-				instantMessageRepository.save(instantMessage);
-			});
-		} else {
+            for (ChatRoomUser connectedUser : chatRoom.getConnectedUsers()) {
+                InstantMessageKey instantMessageKey = instantMessage.getInstantMessageKey();
+                instantMessageKey.setUsername(connectedUser.getUsername());
+                instantMessage.setInstantMessageKey(instantMessageKey);
+				InstantMessage save = instantMessageRepository.save(instantMessage);
+				System.out.println(save);
+			}
+        } else {
 			InstantMessageKey instantMessageKey = instantMessage.getInstantMessageKey();
 			instantMessageKey.setUsername(instantMessage.getFromUser());
 			instantMessage.setInstantMessageKey(instantMessageKey);
